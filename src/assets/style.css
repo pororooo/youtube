@@ -76,3 +76,26 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+.paginationBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 3vmax;
+}
+.page-link{
+  border: none;
+}
+.pageLinkActive{
+ background-color: rgb(114, 144, 243) !important;
+ border: none;
+ border-radius: 5px;
+ margin-left: 10px;
+ margin-right: 10px;
+}
+.pageLinkActive {
+  background-color: rgb(85, 131, 231);
+}
+
+.pageLinkActive {
+  color: white;
+}
+

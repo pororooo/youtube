@@ -10,6 +10,7 @@ export const setNextPageToken = (nextPageToken) => ({
     type: SET_NEXT_PAGE_TOKEN,
     nextPageToken,
   });
+
   
 export const getVideosThunk = (search) => {
   return (dispatch, getState) => {
