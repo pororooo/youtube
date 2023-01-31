@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;500;700&display=swap");
+
+* {
+  font-size: 1.2rem;
+  font-family: "Outfit", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  text-decoration: none;
+}
+.main {
+  background-color: rgb(50, 50, 50);
+  min-height: 100vh;
+}
+.faSearch {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 0 5px 5px 0;
+  padding: 10px;
+}
+.input {
+  width: 60vw;
+  padding: 10px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+}
+.container {
+  display: flex;
+  /* justify-content: space-around; */
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-y: auto;
+}
+/* .cards{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap:nowrap;
+    align-items: center;
+
+} */
+
+.selectedPage {
+  font-weight: bold;
+}
+.card {
+  width: 300px;
+  height: 400px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 10px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 40px 50px;
+}
+.thumbnail {
+  width: 300px;
+  height: auto;
+}
+.description,
+.title,
+.channel,
+.date {
+  font-size: 12px;
+  margin: 5px;
+}
+.info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
