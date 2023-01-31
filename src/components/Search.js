@@ -1,57 +1,44 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import Card from "./Card";
 import { getVideosThunk } from "../actions/videosAction";
-import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 
 const Search = () => {
-  const [videosData, setData] = useState([]);
-  const dispatch = useDispatch()
-  // const [nextPageToken, setNextPageToken]=useState("")
+  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
 
-  const getVideos = (value) => {
-    dispatch(getVideosThunk(value));
- };
-//  dispatch(setSearch(values.search))
+  const getVideos = (search) => {
+    dispatch(getVideosThunk(search));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getVideos(search);
+  };
 
+  const searchVideos = (e) => {
+    if (e.key === "Enter") {
+      getVideos(search);
+    }
+  };
 
   return (
     <div>
       <div className="header">
         <div className="search">
-          <Formik
-            initialValues={{ search: "" }}
-            onSubmit={(values) => {
-                getVideos(values.search)
+          <input
+            className="input"
+            type="text"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
             }}
-          >
-            {({ values, handleChange, handleSubmit }) => (
-              <form onSubmit={handleSubmit}>
-                <input
-                  name="search"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.search}
-                />
-
-                <button onClick={(handleSubmit)} className="faSearch">
-                  <FaSearch />
-                </button>
-              </form>
-            )}
-          </Formik>
+            onKeyDown={searchVideos}
+          />
+          <button onClick={handleSubmit} className="faSearch">
+            <FaSearch />
+          </button>
         </div>
-      </div>
-      <div className="cards">{<Card video={videosData} />}</div>
-      <div className="scrollButtons">
-        {
-          <div>
-            {/* {[1, 2, 3].map((p) => {
-              return <button onClick={getVideos}>{p}</button>;
-            })} */}
-          </div>
-        }
       </div>
     </div>
   );
