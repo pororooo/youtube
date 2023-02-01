@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Search = () => {
   const [search, setSearch] = useState("");
-  const nextPageToken = useSelector((state)=>state.nextPageToken)
+  const nextPageToken = useSelector((state) => state.nextPageToken);
   const dispatch = useDispatch();
 
   const getVideos = () => {
-    dispatch(getVideosThunk({search, nextPageToken}));
+    dispatch(getVideosThunk({ search, nextPageToken }));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,20 +17,22 @@ const Search = () => {
   };
 
   return (
-    <form className="search" onSubmit={handleSubmit}>
-      <input
-        className="input"
-        type="text"
-        placeholder="Search"
-        value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-        }}
-      />
-      <button onClick={handleSubmit} className="faSearch">
-        <FaSearch />
-      </button>
-    </form>
+    <div>
+      <form className="search" onSubmit={handleSubmit}>
+        <input
+          className="input"
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        />
+        <button onClick={handleSubmit} className="faSearch">
+          <FaSearch />
+        </button>
+      </form>
+    </div>
   );
 };
 

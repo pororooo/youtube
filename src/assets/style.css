@@ -31,18 +31,10 @@
 }
 .container {
   display: flex;
-  /* justify-content: space-around; */
   flex-wrap: nowrap;
   align-items: center;
   overflow-y: auto;
 }
-/* .cards{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap:nowrap;
-    align-items: center;
-
-} */
 
 .selectedPage {
   font-weight: bold;
@@ -76,26 +68,16 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-.paginationBox {
+.pagination-container {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 3vmax;
+  padding: 50px;
 }
-.page-link{
+.pagination-container button {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border-radius: 20px;
   border: none;
 }
-.pageLinkActive{
- background-color: rgb(114, 144, 243) !important;
- border: none;
- border-radius: 5px;
- margin-left: 10px;
- margin-right: 10px;
-}
-.pageLinkActive {
-  background-color: rgb(85, 131, 231);
-}
-
-.pageLinkActive {
-  color: white;
-}
-

@@ -11,7 +11,8 @@ import {
 const Card = ({ video }) => {
   return (
     <div className="container">
-      {video.map((item) => {
+      
+      {/* {video.map((item) => {
         let thumbnail = item.snippet.thumbnails.high.url;
         let description = item.snippet.description;
         let title = item.snippet.title;
@@ -46,7 +47,7 @@ const Card = ({ video }) => {
             </div>
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 };
