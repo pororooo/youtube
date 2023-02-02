@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { getVideosThunk } from "../actions/videosAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Search = () => {
   const [search, setSearch] = useState("");
-  const nextPageToken = useSelector((state) => state.nextPageToken);
   const dispatch = useDispatch();
 
   const getVideos = () => {
-    dispatch(getVideosThunk({ search, nextPageToken }));
+    dispatch(getVideosThunk( search ));
   };
   const handleSubmit = (e) => {
     e.preventDefault();

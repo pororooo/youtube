@@ -8,11 +8,11 @@ import {
 
 
 //useSelect
-const Card = ({ video }) => {
+const Card = ({ videosData }) => {
   return (
     <div className="container">
-      
-      {/* {video.map((item) => {
+
+ {videosData.map((item) => {
         let thumbnail = item.snippet.thumbnails.high.url;
         let description = item.snippet.description;
         let title = item.snippet.title;
@@ -47,7 +47,7 @@ const Card = ({ video }) => {
             </div>
           </div>
         );
-      })} */}
+      })} 
     </div>
   );
 };

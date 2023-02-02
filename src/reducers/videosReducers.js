@@ -1,4 +1,4 @@
-import { SET_DATA, SET_NEXT_PAGE_TOKEN } from "../actionTypes";
+import { SET_DATA, SET_NEXT_PAGE_TOKEN, SET_VIDEOS } from "../actionTypes";
 
 export const initialState = {
     data: [],
@@ -19,6 +19,13 @@ export const initialState = {
             return({
                 ...state,
                 nextPageToken: payload
+            })
+        }
+        case SET_VIDEOS : {
+            const { payload } = action;
+            return({
+                ...state,
+                videos: payload
             })
         }
         default: {
