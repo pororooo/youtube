@@ -1,16 +1,18 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../actions/videosAction";
 
 const Switch = () => {
   const pageNumbers = [];
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = useSelector((state) => state.currentPage);
   const [postsPerPage] = useState(3);
-  const [totalCount] = useState(50);
-  const [isActive, setIsActive] = useState(false);
+  const [totalCount] = useState(30);
+  const dispatch = useDispatch();
+
 
   const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    dispatch(setCurrentPage(pageNumber));
   };
-
   const pageCount = Math.ceil(totalCount / postsPerPage);
 
   if (currentPage === 1) {
@@ -35,11 +37,7 @@ const Switch = () => {
         {
           <div>
             {pageNumbers.map((number) => {
-              return (
-                <button onClick={() => paginate(number)}>
-                  {number}
-                </button>
-              );
+              return <button onClick={() => paginate(number)}>{number}</button>;
             })}
           </div>
         }

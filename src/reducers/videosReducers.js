@@ -1,8 +1,11 @@
-import { SET_DATA, SET_NEXT_PAGE_TOKEN, SET_VIDEOS } from "../actionTypes";
+import { SET_CURRENT_PAGE, SET_DATA, SET_NEXT_PAGE_TOKEN, SET_SEARCH } from "../actionTypes";
 
 export const initialState = {
     data: [],
-    nextPageToken: '',
+    nextPageToken: "",
+    search: "",
+    currentPage: 1,
+    page: []
   };
 
   export const videosReducer = (state = initialState, action) => {
@@ -21,11 +24,18 @@ export const initialState = {
                 nextPageToken: payload
             })
         }
-        case SET_VIDEOS : {
+        case SET_SEARCH : {
             const { payload } = action;
             return({
                 ...state,
-                videos: payload
+                search: payload
+            })
+        }
+        case SET_CURRENT_PAGE : {
+            const { payload } = action;
+            return({
+                ...state,
+                currentPage: payload
             })
         }
         default: {
