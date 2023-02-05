@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPage } from "../actions/videosAction";
+import { getVideosThunk } from "../actions/videosAction";
 
 const Switch = () => {
   const pageNumbers = [];
   const currentPage = useSelector((state) => state.currentPage);
-  const [postsPerPage] = useState(3);
-  const [totalCount] = useState(30);
-  const dispatch = useDispatch();
+  const totalCount = useSelector((state) => state.totalCount);
+  const search = useSelector((state) => state.search);
 
+  const [postsPerPage] = useState(3);
+  const dispatch = useDispatch();
 
   const paginate = (pageNumber) => {
     dispatch(setCurrentPage(pageNumber));
+  
+    if ((pageNumber+1)%10 === 0) {
+      dispatch(getVideosThunk(search));
+    }
+  
   };
   const pageCount = Math.ceil(totalCount / postsPerPage);
 

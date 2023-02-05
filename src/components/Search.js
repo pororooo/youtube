@@ -8,7 +8,7 @@ const Search = () => {
   const dispatch = useDispatch();
 
   const getVideos = () => {
-    dispatch(getVideosThunk( search ));
+    dispatch(getVideosThunk(search));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
