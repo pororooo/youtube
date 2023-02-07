@@ -30,6 +30,9 @@
   padding: 50px;
 }
 .container {
+  cursor: grab;
+  /* pointer-events: none; */
+  user-select: none;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -42,13 +45,13 @@
 }
 .card {
   width: 300px;
-  height: 400px;
+  height: 450px;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 10px;
   border: none;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   margin: 40px 50px;
@@ -57,17 +60,25 @@
   width: 300px;
   height: auto;
 }
-.description,
 .title,
-.channel,
-.date {
-  font-size: 12px;
+.channel {
+  font-size: 18px;
+  font-weight: 400;
   margin: 5px;
 }
 .info {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.item {
+  width: 130px;
+  font-size: 16px;
+}
+.icon {
+  width: 15px;
+  height: auto;
+  margin-right: 5px;
 }
 .pagination-container {
   display: flex;
@@ -85,26 +96,9 @@
 
 /* pagination */
 
-@keyframes nextPage {
-  0% {
-    opacity: 0;
-    transform: translate(10em, 0);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes prevPage {
-  0% {
-    opacity: 0;
-    transform: translate(-10em, 0);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
+@media (hover: none) and (pointer: coarse) {
+  .left-arrow,
+  .right-arrow {
+    display: none;
   }
 }

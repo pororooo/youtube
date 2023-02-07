@@ -1,58 +1,82 @@
 import {
   FaUserFriends,
   FaCalendarAlt,
-  FaUser,
   FaHeart,
-  FaHeartBroken,
+  FaCommentDots,
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Switch from "./Switch";
 import { setCurrentPage } from "../actions/videosAction";
 import { useRef } from "react";
 import { getVideosThunk } from "../actions/videosAction";
+import { useState } from "react";
 
 import "../assets/style.css";
 
 const Card = () => {
   const dispatch = useDispatch();
 
-  const videos = useSelector((state) => state.data);
   const search = useSelector((state) => state.search);
-
-  //console.log(videos[0].id.videoId);
-
+  const currentPage = useSelector((state) => state.currentPage);
+  const statistic = useSelector((state) => state.likes);
 
   let page = [];
 
-  const currentPage = useSelector((state) => state.currentPage);
   if (currentPage === 1) {
-    page = videos.slice(currentPage - 1, currentPage + 2);
+    page = statistic.slice(currentPage - 1, currentPage + 2);
   }
   if (currentPage !== 1) {
-    page = videos.slice(currentPage * 3 - 1, currentPage * 3 + 2);
+    page = statistic.slice(currentPage * 3 - 1, currentPage * 3 + 2);
   }
-  let currentPageRef = useRef(null);
 
-  const handlePageChange = () => {
-    currentPageRef.current.style.animation = "nextPage .5s forwards";
-    dispatch(setCurrentPage(currentPage + 1));
+  const [touchStart, setTouchStart] = useState(null);
+
+  const handleTouchStart = (e) => {
+    const touchDown = e.touches[0].clientX;
+    setTouchStart(touchDown);
+  };
+
+  const handleTouchMove = (e) => {
+    const touchDown = touchStart;
+
+    if (touchDown === null) {
+      return;
+    }
+
+    const currentTouch = e.touches[0].clientX;
+    const diff = touchDown - currentTouch;
+
+    if (diff > 5) {
+      let pageNumber = currentPage + 1;
+      dispatch(setCurrentPage(pageNumber));
+    }
+
+    if (diff < -5 && currentPage !== 1) {
+      let pageNumber = currentPage - 1;
+      dispatch(setCurrentPage(pageNumber));
+    }
     if ((currentPage - 2) % 10 === 0) {
       dispatch(getVideosThunk(search));
     }
+
+    setTouchStart(null);
   };
+
   return (
     <div>
       <div
         className="container"
-        ref={currentPageRef}
-        onClick={handlePageChange}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
       >
         {page.map((item) => {
           let thumbnail = item.snippet.thumbnails.high.url;
-          let description = item.snippet.description;
-          let title = item.snippet.title;
+          let title = item.snippet.localized.title;
           let channel = item.snippet.channelTitle;
-          let date = item.snippet.publishedAt;
+          let date = item.snippet.publishedAt.slice(0, 10);
+          let likes = item.statistics.likeCount;
+          let views = item.statistics.viewCount;
+          let comments = item.statistics.commentCount;
 
           return (
             <div className="card">
@@ -60,24 +84,23 @@ const Card = () => {
                 <img className="thumbnail" src={thumbnail} alt="" />
               </div>
               <div className="title">{title}</div>
-              <div className="description">{description}</div>
-              <div className="channel">
-                <FaUser />
-                {channel}
-              </div>
+              <div className="channel">{channel}</div>
               <div className="info">
-                <div className="date">
-                  <FaCalendarAlt />
+                <div className="item">
+                  <FaCalendarAlt className="icon" />
                   {date}
                 </div>
-                <div>
-                  <FaUserFriends />
+                <div className="item">
+                  <FaHeart className="icon" />
+                  {likes}
                 </div>
-                <div>
-                  <FaHeart />
+                <div className="item">
+                  <FaUserFriends className="icon" />
+                  {views}
                 </div>
-                <div>
-                  <FaHeartBroken />
+                <div className="item">
+                  <FaCommentDots className="icon" />
+                  {comments}
                 </div>
               </div>
             </div>

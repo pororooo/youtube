@@ -1,4 +1,5 @@
-import axios from "axios";
+import { getVideos, getLikes } from "../server";
+
 import {
   SET_DATA,
   SET_NEXT_PAGE_TOKEN,
@@ -41,24 +42,6 @@ export const setLikes = (likes) => ({
   payload: likes,
 });
 
-export const getVideos = async (search, nextPageToken) => {
-  const key = "AIzaSyD8NhtPbZR0W0tsdNTo8XpUZdF3Jlu_6NE";
-  return axios.get(
-    `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${search}&type=video&key=${key}&maxResults=30&order=relevance${
-      nextPageToken ? "&pageToken=" + nextPageToken : ""
-    }`
-  );
-};
-
-export const getLikes = async (ids) => {
-  const key = "AIzaSyB_Qfguku1t5k5LrJ2r3Q2VvtkZxN_zNyI";
-  return axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${ids.join(
-      ","
-    )}&key=${key}`
-  );
-};
-
 export const getVideosThunk = (search) => {
   return async (dispatch, getState) => {
     try {
@@ -67,34 +50,23 @@ export const getVideosThunk = (search) => {
       const { data } = await getVideos(search, nextPageToken, maxResults);
       dispatch(setTotalCount(data.pageInfo.totalResults));
       dispatch(setSearch(search));
-      const arr = [];
-      const oldStateIds = getState().id;
-      for (let i = 0; i < data.items.length; i++) {
-        arr.push(data.items[i].id.videoId);
-      }
-      const ids = oldStateIds ? [...oldStateIds, arr].flat(1) : arr;
-      dispatch(setId(ids));
-      const { statistic } = await getLikes(ids);
-      console.log(ids.join(
-        ","
-      ))
-      dispatch(setLikes(statistic.items))
       const oldState = getState().data;
       const videos = oldState ? [...oldState, data.items].flat(1) : data.items;
       dispatch(setData(videos));
       dispatch(setNextPageToken(data.nextPageToken));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-export const getVideosInfo = (id) => {
-  return async (dispatch, getState) => {
-    try {
-      const { data } = await getLikes(id);
-      dispatch(setTotalCount(data.pageInfo.totalResults));
-      dispatch(setData(data.items));
-      dispatch(setNextPageToken(data.nextPageToken));
+
+      const ids = [];
+      const oldStateIds = getState().likes;
+      for (let i = 0; i < data.items.length; i++) {
+        ids.push(data.items[i].id.videoId);
+      }
+      dispatch(setId(ids));
+      const likes = await getLikes(ids);
+      const statistic = oldStateIds
+        ? [...oldStateIds, likes.data.items].flat(1)
+        : likes.data.items;
+      dispatch(setLikes(statistic));
+      
     } catch (error) {
       console.log(error);
     }
