@@ -45,25 +45,33 @@
 }
 .card {
   width: 300px;
-  height: 450px;
+  height: 500px;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 10px;
   border: none;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   flex-direction: column;
   margin: 40px 50px;
 }
 .thumbnail {
+  position: relative;
+  top: -10px;
+  left: -10px;
+
   width: 300px;
   height: auto;
 }
-.title,
 .channel {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
+  margin: 5px;
+}
+.title{
+  font-size: 18px;
+  font-weight: 600;
   margin: 5px;
 }
 .info {
@@ -92,6 +100,15 @@
   margin: 5px;
   border-radius: 20px;
   border: none;
+}
+.active-button{
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border-radius: 20px;
+  border: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
 }
 
 /* pagination */

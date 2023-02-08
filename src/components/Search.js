@@ -1,13 +1,23 @@
-import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { getVideosThunk } from "../actions/videosAction";
-import { useDispatch } from "react-redux";
+import {
+  getVideosThunk,
+  setSearch,
+  setData,
+  setLikes,
+  setCurrentPage,
+  setNextPageToken,
+} from "../actions/videosAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const Search = () => {
-  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+  const search = useSelector((state) => state.search);
 
   const getVideos = () => {
+    dispatch(setData([]));
+    dispatch(setLikes([]));
+    dispatch(setCurrentPage(1));
+    dispatch(setNextPageToken(""));
     dispatch(getVideosThunk(search));
   };
   const handleSubmit = (e) => {
@@ -22,9 +32,8 @@ const Search = () => {
           className="input"
           type="text"
           placeholder="Search"
-          value={search}
           onChange={(e) => {
-            setSearch(e.target.value);
+            dispatch(setSearch(e.target.value));
           }}
         />
         <button onClick={handleSubmit} className="faSearch">

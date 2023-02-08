@@ -14,11 +14,10 @@ const Switch = () => {
 
   const paginate = (pageNumber) => {
     dispatch(setCurrentPage(pageNumber));
-  
-    if ((pageNumber+1)%10 === 0) {
+
+    if ((pageNumber + 1) % 10 === 0) {
       dispatch(getVideosThunk(search));
     }
-  
   };
   const pageCount = Math.ceil(totalCount / postsPerPage);
 
@@ -43,8 +42,21 @@ const Switch = () => {
       <div className="pagination">
         {
           <div>
-            {pageNumbers.map((number) => {
-              return <button onClick={() => paginate(number)}>{number}</button>;
+            {pageNumbers.map((number, i) => {
+              if (number === currentPage) {
+                return (
+                  <button key={i}
+                    className="active-button"
+                    onClick={() => paginate(number)}
+                  >
+                    {number}
+                  </button>
+                );
+              } else {
+                return (
+                  <button key={i} onClick={() => paginate(number)}>{number}</button>
+                );
+              }
             })}
           </div>
         }

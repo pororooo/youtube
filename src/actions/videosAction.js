@@ -49,6 +49,10 @@ export const getVideosThunk = (search) => {
       const maxResults = getState().maxResults;
       const { data } = await getVideos(search, nextPageToken, maxResults);
       dispatch(setTotalCount(data.pageInfo.totalResults));
+      if (getState().search !== search && getState().search !== false) {
+        dispatch(setData([]));
+        console.log(getState().search)
+      }
       dispatch(setSearch(search));
       const oldState = getState().data;
       const videos = oldState ? [...oldState, data.items].flat(1) : data.items;
@@ -66,7 +70,6 @@ export const getVideosThunk = (search) => {
         ? [...oldStateIds, likes.data.items].flat(1)
         : likes.data.items;
       dispatch(setLikes(statistic));
-      
     } catch (error) {
       console.log(error);
     }

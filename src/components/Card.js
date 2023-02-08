@@ -7,7 +7,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Switch from "./Switch";
 import { setCurrentPage } from "../actions/videosAction";
-import { useRef } from "react";
 import { getVideosThunk } from "../actions/videosAction";
 import { useState } from "react";
 
@@ -30,6 +29,7 @@ const Card = () => {
   }
 
   const [touchStart, setTouchStart] = useState(null);
+  const [difference, setDifference] = useState(0);
 
   const handleTouchStart = (e) => {
     const touchDown = e.touches[0].clientX;
@@ -38,27 +38,29 @@ const Card = () => {
 
   const handleTouchMove = (e) => {
     const touchDown = touchStart;
-
     if (touchDown === null) {
       return;
     }
-
     const currentTouch = e.touches[0].clientX;
     const diff = touchDown - currentTouch;
+    setDifference(diff);
+  };
 
-    if (diff > 5) {
+  const handleTouchEnd = () => {
+    if (difference > 5) {
       let pageNumber = currentPage + 1;
+      console.log(pageNumber);
       dispatch(setCurrentPage(pageNumber));
     }
-
-    if (diff < -5 && currentPage !== 1) {
+    if (difference < -5 && currentPage !== 1) {
       let pageNumber = currentPage - 1;
+      console.log(pageNumber);
+
       dispatch(setCurrentPage(pageNumber));
     }
     if ((currentPage - 2) % 10 === 0) {
       dispatch(getVideosThunk(search));
     }
-
     setTouchStart(null);
   };
 
@@ -68,8 +70,9 @@ const Card = () => {
         className="container"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        {page.map((item) => {
+        {page.map((item, i) => {
           let thumbnail = item.snippet.thumbnails.high.url;
           let title = item.snippet.localized.title;
           let channel = item.snippet.channelTitle;
@@ -79,7 +82,7 @@ const Card = () => {
           let comments = item.statistics.commentCount;
 
           return (
-            <div className="card">
+            <div className="card" key={i}>
               <div>
                 <img className="thumbnail" src={thumbnail} alt="" />
               </div>
