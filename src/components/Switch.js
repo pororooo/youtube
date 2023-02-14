@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPage } from "../actions/videosAction";
 import { getVideosThunk } from "../actions/videosAction";
+import { swipeLeft, swipeRight } from "../cardsTransition";
 
 const Switch = () => {
   const pageNumbers = [];
@@ -12,10 +13,18 @@ const Switch = () => {
   const [postsPerPage] = useState(3);
   const dispatch = useDispatch();
 
+
   const paginate = (pageNumber) => {
+    if (pageNumber > currentPage) {
+      swipeLeft(pageNumber);
+    }
+    if (pageNumber < currentPage) {
+      swipeRight(pageNumber);
+    }
+
     dispatch(setCurrentPage(pageNumber));
 
-    if ((pageNumber + 1) % 10 === 0) {
+    if ((pageNumber + 2) % 10 === 0) {
       dispatch(getVideosThunk(search));
     }
   };
@@ -45,7 +54,8 @@ const Switch = () => {
             {pageNumbers.map((number, i) => {
               if (number === currentPage) {
                 return (
-                  <button key={i}
+                  <button
+                    key={i}
                     className="active-button"
                     onClick={() => paginate(number)}
                   >
@@ -54,7 +64,9 @@ const Switch = () => {
                 );
               } else {
                 return (
-                  <button key={i} onClick={() => paginate(number)}>{number}</button>
+                  <button key={i} onClick={() => paginate(number)}>
+                    {number}
+                  </button>
                 );
               }
             })}

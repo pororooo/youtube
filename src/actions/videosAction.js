@@ -7,6 +7,7 @@ import {
   SET_CURRENT_PAGE,
   SET_TOTAL_COUNT,
   SET_ID,
+  SET_PAGE,
   SET_LIKES,
 } from "../actionTypes";
 
@@ -24,6 +25,12 @@ export const setCurrentPage = (currentPage) => ({
   type: SET_CURRENT_PAGE,
   payload: currentPage,
 });
+
+export const setPage = (page) => ({
+  type: SET_PAGE,
+  payload: page,
+});
+
 
 export const setSearch = (search) => ({
   type: SET_SEARCH,

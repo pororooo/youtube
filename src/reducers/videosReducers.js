@@ -3,6 +3,7 @@ import {
   SET_DATA,
   SET_NEXT_PAGE_TOKEN,
   SET_SEARCH,
+  SET_PAGE,
   SET_TOTAL_COUNT,
   SET_ID,
   SET_LIKES,
@@ -49,6 +50,14 @@ export const videosReducer = (state = initialState, action) => {
         currentPage: payload,
       };
     }
+    case SET_PAGE: {
+      const { payload } = action;
+      return {
+        ...state,
+        page: payload,
+      };
+    }
+
     case SET_TOTAL_COUNT: {
       const { payload } = action;
       return {
