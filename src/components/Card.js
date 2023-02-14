@@ -33,7 +33,6 @@ const Card = () => {
     setTouchStart(touchDown);
   };
 
-
   const handleTouchMove = (e) => {
     if (start === null) {
       return;
@@ -51,7 +50,6 @@ const Card = () => {
       dispatch(setCurrentPage(pageNumber));
     }
     if (difference < 0 && currentPage !== 1) {
-      console.log(difference);
       let right = currentPage - 1;
       swipeRight(right);
       let pageNumber = currentPage - 1;

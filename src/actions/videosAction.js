@@ -31,7 +31,6 @@ export const setPage = (page) => ({
   payload: page,
 });
 
-
 export const setSearch = (search) => ({
   type: SET_SEARCH,
   payload: search,
@@ -58,7 +57,6 @@ export const getVideosThunk = (search) => {
       dispatch(setTotalCount(data.pageInfo.totalResults));
       if (getState().search !== search && getState().search !== false) {
         dispatch(setData([]));
-        console.log(getState().search)
       }
       dispatch(setSearch(search));
       const oldState = getState().data;

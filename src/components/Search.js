@@ -8,16 +8,10 @@ import {
   setNextPageToken,
 } from "../actions/videosAction";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 
 const Search = () => {
   const dispatch = useDispatch();
- const search = useSelector((state) => state.search);
-//  const nextPageToken = useSelector((state) => state.nextPageToken);
-
-//  useEffect(()=>{
-//   dispatch(getVideosThunk(search));
-//  }, [nextPageToken])
+  const search = useSelector((state) => state.search);
 
   const getVideos = () => {
     dispatch(setData([]));

@@ -14,7 +14,6 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
 }
 .faSearch {
   background-color: rgb(255, 255, 255);
@@ -35,24 +34,25 @@
   padding: 50px;
 }
 
-.block{
+.block {
   background-color: rgb(168, 168, 168);
   border-radius: 5px;
   user-select: none;
-  height: 600px;
+  height: 500px;
   width: 1200px;
+  overflow: hidden;
 }
 .container {
   user-select: none;
   touch-action: none;
-  height: 600px;
+  height: 500px;
   width: 1200px;
   cursor: grab;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .selectedPage {
@@ -62,7 +62,7 @@
   pointer-events: none;
   user-select: none;
   width: 300px;
-  height: 500px;
+  height: 400px;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 10px;
@@ -127,8 +127,8 @@
   background-color: rgb(0, 0, 0);
 }
 
-@media(max-width: 426px){
-  .block{
+@media (max-width: 426px) {
+  .block {
     width: 350px;
   }
   .container {
