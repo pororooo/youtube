@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPage } from "../actions/videosAction";
 import { getVideosThunk } from "../actions/videosAction";
 import { swipeLeft, swipeRight } from "../cardsTransition";
+import { refCards } from "./Card";
 
 const Switch = () => {
   const pageNumbers = [];
@@ -16,10 +17,10 @@ const Switch = () => {
 
   const paginate = (pageNumber) => {
     if (pageNumber > currentPage) {
-      swipeLeft(pageNumber);
+      swipeLeft(pageNumber, refCards);
     }
     if (pageNumber < currentPage) {
-      swipeRight(pageNumber);
+      swipeRight(pageNumber, refCards);
     }
 
     dispatch(setCurrentPage(pageNumber));
