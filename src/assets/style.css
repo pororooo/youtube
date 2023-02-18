@@ -47,9 +47,8 @@
   height: 500px;
   width: 1200px;
   cursor: grab;
-  overflow-x: scroll;
   overflow: hidden;
-
+  overflow-x: scroll;
 }
 
 .cards {

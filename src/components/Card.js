@@ -32,31 +32,24 @@ export const Card = () => {
     setTouchStart(null);
     setCurrentTouch(null);
     setDifference(0);
-    setTouchStart(e.touches[0].clientX);
+
+    if (e._reactName === "onTouchStart") {
+      setTouchStart(e.touches[0].clientX);
+    } else if (e._reactName === "onMouseDown") {
+      const touchDown = e.clientX;
+      setTouchStart(touchDown);
+    }
   };
 
   const handleTouchMove = (e) => {
     if (start === null) {
       return;
     }
-    setCurrentTouch(e.touches[0].clientX);
-    const diff = start - currentTouch;
-    setDifference(diff);
-  };
-
-  const handleMouseStart = (e) => {
-    setTouchStart(null);
-    setCurrentTouch(null);
-    setDifference(0);
-    const touchDown = e.clientX;
-    setTouchStart(touchDown);
-  };
-
-  const handleMouseMove = (e) => {
-    if (start === null) {
-      return;
+    if (e._reactName === "onTouchMove") {
+      setCurrentTouch(e.touches[0].clientX);
+    } else if (e._reactName === "onMouseMove") {
+      setCurrentTouch(e.clientX);
     }
-    setCurrentTouch(e.clientX);
     const diff = start - currentTouch;
     setDifference(diff);
   };
@@ -86,10 +79,10 @@ export const Card = () => {
         <div
           className="container"
           onTouchStart={handleTouchStart}
+          onMouseDown={handleTouchStart}
           onTouchMove={handleTouchMove}
+          onMouseMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          onMouseDown={handleMouseStart}
-          onMouseMove={handleMouseMove}
           onMouseUp={handleTouchEnd}
         >
           <div className="cards" ref={cards}>
