@@ -21,6 +21,8 @@ export const Card = () => {
   const [start, setTouchStart] = useState(null);
   const [currentTouch, setCurrentTouch] = useState(null);
   const [difference, setDifference] = useState(0);
+  const [mouseDown, setMouseDown] = useState(false);
+
   const cards = useRef(null);
   const dispatch = useDispatch();
   const statistic = useSelector((state) => state.likes);
@@ -36,6 +38,7 @@ export const Card = () => {
     if (e._reactName === "onTouchStart") {
       setTouchStart(e.touches[0].clientX);
     } else if (e._reactName === "onMouseDown") {
+      setMouseDown(true);
       const touchDown = e.clientX;
       setTouchStart(touchDown);
     }
@@ -47,14 +50,26 @@ export const Card = () => {
     }
     if (e._reactName === "onTouchMove") {
       setCurrentTouch(e.touches[0].clientX);
-    } else if (e._reactName === "onMouseMove") {
+    }
+    if (e._reactName === "onMouseMove" && mouseDown === true) {
       setCurrentTouch(e.clientX);
     }
-    const diff = start - currentTouch;
-    setDifference(diff);
+    setDifference(start - currentTouch);
+
+    if (difference > 0) {
+      refCards.style.transform = `translate(-${
+        currentPage * refCards.clientWidth - currentTouch
+      }px)`;
+    } else if (difference < 0 && currentPage !== 1) {
+      refCards.style.transform = `translate(-${
+        (currentPage - 1) * refCards.clientWidth - currentTouch
+      }px)`;
+    }
   };
 
   const handleTouchEnd = () => {
+    setMouseDown(false);
+
     if (difference > 0) {
       let left = currentPage + 1;
       swipeLeft(left, refCards);
