@@ -1,4 +1,4 @@
-import { getVideos, getLikes } from "../server";
+import { getVideos, getLikes } from "../../api";
 
 import {
   SET_DATA,

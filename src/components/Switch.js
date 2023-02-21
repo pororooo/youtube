@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPage } from "../actions/videosAction";
-import { getVideosThunk } from "../actions/videosAction";
-import { swipeLeft, swipeRight } from "../cardsTransition";
+import { setCurrentPage } from "../store/actions/videosAction";
+import { getVideosThunk } from "../store/actions/videosAction";
+import { swipeLeft, swipeRight } from "../utils";
 import { refCards } from "./Card";
 
 const Switch = () => {

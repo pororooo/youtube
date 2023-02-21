@@ -6,7 +6,7 @@ import {
   setLikes,
   setCurrentPage,
   setNextPageToken,
-} from "../actions/videosAction";
+} from "../store/actions/videosAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const Search = () => {

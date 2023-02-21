@@ -1,11 +1,11 @@
 import Search from "./components/Search";
 import "../src/assets/style.css";
-import { Card } from "./components/Card";
+import { CardsContainer } from "./components/CardsContainer";
 const App = () => {
   return (
     <div className="main">
       <Search />
-      <Card />
+      <CardsContainer />
     </div>
   );
 };
