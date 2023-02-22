@@ -54,6 +54,7 @@ export const CardsContainer = () => {
       setTransition((currentPage * refCards.clientWidth - currentTouch) * -1);
 
       refCards.style.transform = `translate(${transition}px)`;
+
     }
 
     if (difference < 0 && currentPage !== 1) {
