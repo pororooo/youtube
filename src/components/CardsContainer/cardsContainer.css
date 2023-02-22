@@ -1,0 +1,17 @@
+.block {
+    background-color: rgb(168, 168, 168);
+    border-radius: 5px;
+    user-select: none;
+    height: 500px;
+    width: 1200px;
+    overflow: hidden;
+  }
+  .container {
+    user-select: none;
+    height: 500px;
+    width: 1200px;
+    cursor: grab;
+    overflow: hidden;
+
+  }
+  

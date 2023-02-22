@@ -48,6 +48,13 @@ export const setLikes = (likes) => ({
   payload: likes,
 });
 
+export const setAllNull = (dispatch) =>{
+  dispatch(setData([]));
+  dispatch(setLikes([]));
+  dispatch(setCurrentPage(1));
+  dispatch(setNextPageToken(""));
+}
+
 export const getVideosThunk = (search) => {
   return async (dispatch, getState) => {
     try {

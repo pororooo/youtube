@@ -6,6 +6,7 @@ import {
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
+import "./card.css"
 
 export let refCards = null;
 

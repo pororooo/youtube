@@ -2,22 +2,17 @@ import { FaSearch } from "react-icons/fa";
 import {
   getVideosThunk,
   setSearch,
-  setData,
-  setLikes,
-  setCurrentPage,
-  setNextPageToken,
-} from "../store/actions/videosAction";
+  setAllNull,
+} from "../../store/actions/videosAction";
 import { useDispatch, useSelector } from "react-redux";
+import "./search.css"
 
 const Search = () => {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search);
 
   const getVideos = () => {
-    dispatch(setData([]));
-    dispatch(setLikes([]));
-    dispatch(setCurrentPage(1));
-    dispatch(setNextPageToken(""));
+    setAllNull(dispatch)
     dispatch(getVideosThunk(search));
   };
   const handleSubmit = (e) => {

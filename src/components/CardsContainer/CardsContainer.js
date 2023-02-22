@@ -1,10 +1,13 @@
-import Switch from "./Switch";
-import { setCurrentPage, getVideosThunk } from "../store/actions/videosAction";
+import Switch from "../Switch/Switch";
+import {
+  setCurrentPage,
+  getVideosThunk,
+} from "../../store/actions/videosAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { swipeLeft, swipeRight } from "../utils";
-import { refCards, Card } from "./Card";
-
+import { swipeLeft, swipeRight } from "../../utils";
+import { refCards, Card } from "../Card/Card";
+import "./cardsContainer.css";
 
 export const CardsContainer = () => {
   const currentPage = useSelector((state) => state.currentPage);
@@ -13,9 +16,11 @@ export const CardsContainer = () => {
   const [currentTouch, setCurrentTouch] = useState(null);
   const [difference, setDifference] = useState(0);
   const [mouseDown, setMouseDown] = useState(false);
+  const [touchDown, setTouchDown] = useState(false);
+
+  const [transition, setTransition] = useState(0);
 
   const dispatch = useDispatch();
-
 
   const handleTouchStart = (e) => {
     setTouchStart(null);
@@ -23,36 +28,47 @@ export const CardsContainer = () => {
     setDifference(0);
 
     if (e._reactName === "onTouchStart") {
+      setTouchDown(true);
       setTouchStart(e.touches[0].clientX);
-    } else if (e._reactName === "onMouseDown") {
+    } else if (e._reactName === "onPointerDown") {
       setMouseDown(true);
-      const touchDown = e.clientX;
-      setTouchStart(touchDown);
+      setTouchStart(e.clientX);
     }
   };
-
   const handleTouchMove = (e) => {
     if (start === null) {
       return;
     }
-    if (e._reactName === "onTouchMove") {
+
+    if (e._reactName === "onTouchMove" && touchDown === true) {
       setCurrentTouch(e.touches[0].clientX);
     }
-    if (e._reactName === "onMouseMove" && mouseDown === true) {
+    if (e._reactName === "onPointerMove" && mouseDown === true) {
       setCurrentTouch(e.clientX);
+      console.log(currentTouch);
     }
+
     setDifference(start - currentTouch);
-    console.log(difference)
 
     if (difference > 0) {
-      refCards.style.transform = `translate(-${
-        currentPage * refCards.clientWidth - currentTouch
-      }px)`;
-    } 
+      setTransition((currentPage * refCards.clientWidth - currentTouch) * -1);
+
+      refCards.style.transform = `translate(${transition}px)`;
+    }
+
     if (difference < 0 && currentPage !== 1) {
-      refCards.style.transform = `translate(-${
-        (currentPage - 1) * refCards.clientWidth - currentTouch
-      }px)`;
+      setTransition(
+        (currentPage * refCards.clientWidth -
+          refCards.clientWidth / 1.5 -
+          currentTouch) *
+          -1
+      );
+
+      refCards.style.transform = `translate(${transition}px)`;
+    }
+
+    if (currentPage === 1 && difference < 0) {
+      refCards.style.transform = `translate(0px)`;
     }
   };
 
@@ -60,21 +76,32 @@ export const CardsContainer = () => {
     setMouseDown(false);
 
     if (difference > 0) {
-      const left = currentPage + 1;
-      swipeLeft(left, refCards);
       const pageNumber = currentPage + 1;
+
+      if (touchDown === true) {
+        swipeLeft(pageNumber, refCards);
+      }
+      if (touchDown === false) {
+        swipeLeft(pageNumber, refCards, transition);
+      }
       dispatch(setCurrentPage(pageNumber));
     }
     if (difference < 0 && currentPage !== 1) {
-      const right = currentPage - 1;
-      swipeRight(right, refCards);
       const pageNumber = currentPage - 1;
+      if (touchDown === true) {
+        swipeRight(pageNumber, refCards);
+      }
+      if (touchDown === false) {
+        swipeRight(pageNumber, refCards, transition);
+      }
+
       dispatch(setCurrentPage(pageNumber));
     }
 
     if ((currentPage + 2) % 10 === 0) {
       dispatch(getVideosThunk(search));
     }
+    setTouchDown(false);
   };
 
   return (
@@ -83,11 +110,11 @@ export const CardsContainer = () => {
         <div
           className="container"
           onTouchStart={handleTouchStart}
-          onMouseDown={handleTouchStart}
+          onPointerDown={handleTouchStart}
           onTouchMove={handleTouchMove}
-          onMouseMove={handleTouchMove}
+          onPointerMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          onMouseUp={handleTouchEnd}
+          onPointerUp={handleTouchEnd}
         >
           <Card />
         </div>
