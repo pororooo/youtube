@@ -1,9 +1,9 @@
 import { setCurrentPage, getVideosThunk } from "../store/actions/videosAction";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { swipeLeft, swipeRight } from "../utils";
 
-export const useSwipe = (refCards) => {
+const useSwipe = (refCards) => {
   const currentPage = useSelector((state) => state.currentPage);
   const search = useSelector((state) => state.search);
   const [start, setTouchStart] = useState(null);
@@ -11,14 +11,12 @@ export const useSwipe = (refCards) => {
   const [difference, setDifference] = useState(0);
   const [mouseDown, setMouseDown] = useState(false);
   const [touchDown, setTouchDown] = useState(false);
-
   const [transition, setTransition] = useState(0);
 
   const dispatch = useDispatch();
 
   const handleTouchStart = (e) => {
-    console.log("onTouchStart")
-
+    
     setTouchStart(null);
     setCurrentTouch(null);
     setDifference(0);
@@ -41,7 +39,6 @@ export const useSwipe = (refCards) => {
     }
     if (e._reactName === "onPointerMove" && mouseDown === true) {
       setCurrentTouch(e.clientX);
-      console.log(currentTouch);
     }
 
     setDifference(start - currentTouch);
@@ -104,3 +101,5 @@ export const useSwipe = (refCards) => {
     handleTouchStart, handleTouchMove, handleTouchEnd,
   }
 };
+
+export default useSwipe
