@@ -5,7 +5,7 @@ import {
   setAllNull,
 } from "../../store/actions/videosAction";
 import { useDispatch, useSelector } from "react-redux";
-import "./search.css"
+import style from "./search.module.css";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -22,16 +22,16 @@ const Search = () => {
 
   return (
     <div>
-      <form className="search" onSubmit={handleSubmit}>
+      <form className={style.search} onSubmit={handleSubmit}>
         <input
-          className="input"
+          className={style.input}
           type="text"
           placeholder="Search"
           onChange={(e) => {
             dispatch(setSearch(e.target.value));
           }}
         />
-        <button onClick={handleSubmit} className="faSearch">
+        <button onClick={handleSubmit} className={style.faSearch}>
           <FaSearch />
         </button>
       </form>

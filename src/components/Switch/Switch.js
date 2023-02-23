@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPage } from "../../store/actions/videosAction";
 import { getVideosThunk } from "../../store/actions/videosAction";
 import { swipeLeft, swipeRight } from "../../utils";
-import { refCards } from "../Card/Card";
-import "./switch.css"
+import { refCards } from "../CardsContainer/CardsContainer";
+import style from "./switch.module.css";
 
 const Switch = () => {
   const pageNumbers = [];
@@ -49,8 +49,8 @@ const Switch = () => {
   }
 
   return (
-    <div className="pagination-container">
-      <div className="pagination">
+    <div className={style.paginationContainer}>
+      <div className={style.pagination}>
         {
           <div>
             {pageNumbers.map((number, i) => {
@@ -58,7 +58,7 @@ const Switch = () => {
                 return (
                   <button
                     key={i}
-                    className="active-button"
+                    className={style.activeButton}
                     onClick={() => paginate(number)}
                   >
                     {number}

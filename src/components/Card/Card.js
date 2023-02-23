@@ -4,57 +4,36 @@ import {
   FaHeart,
   FaCommentDots,
 } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { useRef } from "react";
-import "./card.css"
+import style from "./card.module.css";
 
-export let refCards = null;
-
-export const Card = () => {
-  const statistic = useSelector((state) => state.likes);
-  const cards = useRef(null);
-  let page = statistic;
-  refCards = cards.current;
-
+const Card = ({ item }) => {
   return (
-    <div className="cards" ref={cards}>
-      {page.map((item, i) => {
-        const thumbnail = item.snippet.thumbnails.high.url;
-        const title = item.snippet.localized.title;
-        const channel = item.snippet.channelTitle;
-        const date = item.snippet.publishedAt.slice(0, 10);
-        const likes = item.statistics.likeCount;
-        const views = item.statistics.viewCount;
-        const comments = item.statistics.commentCount;
-
-        return (
-          <div className="card" key={i}>
-            <div>
-              <img className="thumbnail" src={thumbnail} alt="" />
-            </div>
-            <div className="title">{title}</div>
-            <div className="channel">{channel}</div>
-            <div className="info">
-              <div className="item">
-                <FaCalendarAlt className="icon" />
-                {date}
-              </div>
-              <div className="item">
-                <FaHeart className="icon" />
-                {likes}
-              </div>
-              <div className="item">
-                <FaUserFriends className="icon" />
-                {views}
-              </div>
-              <div className="item">
-                <FaCommentDots className="icon" />
-                {comments}
-              </div>
-            </div>
-          </div>
-        );
-      })}
+    <div className={style.card}>
+      <div>
+        <img className={style.thumbnail} src={item.snippet.thumbnails.high.url} alt="" />
+      </div>
+      <div className={style.title}>{item.snippet.localized.title}</div>
+      <div className={style.channel}>{item.snippet.channelTitle}</div>
+      <div className={style.info}>
+        <div className={style.item}>
+          <FaCalendarAlt className={style.icon} />
+          {item.snippet.publishedAt.slice(0, 10)}
+        </div>
+        <div className={style.item}>
+          <FaHeart className={style.icon} />
+          {item.statistics.likeCount}
+        </div>
+        <div className={style.item}>
+          <FaUserFriends className={style.icon} />
+          {item.statistics.viewCount}
+        </div>
+        <div className={style.item}>
+          <FaCommentDots className={style.icon} />
+          {item.statistics.commentCount}
+        </div>
+      </div>
     </div>
   );
 };
+
+export default Card;
