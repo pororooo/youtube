@@ -25,4 +25,11 @@
   align-items: center;
   justify-content: flex-start;
 }
-
+@media (max-width: 426px) {
+  .block {
+    width: 350px;
+  }
+  .container {
+    width: 350px;
+  }
+}

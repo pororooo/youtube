@@ -45,4 +45,13 @@
     height: auto;
     margin-right: 5px;
   }
+  @media (max-width: 426px) {
+    .card {
+      width: 250px;
+      margin: 40px 50px;
+    }
+    .thumbnail {
+      width: 250px;
+    }
+  }
   

@@ -18,18 +18,3 @@
 
 
 
-@media (max-width: 426px) {
-  .block {
-    width: 350px;
-  }
-  .container {
-    width: 350px;
-  }
-  .card {
-    width: 250px;
-    margin: 40px 50px;
-  }
-  .thumbnail {
-    width: 250px;
-  }
-}
