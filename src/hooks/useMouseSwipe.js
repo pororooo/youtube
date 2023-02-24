@@ -39,10 +39,12 @@ const useMouseSwipe = (refCards) => {
     setMouseMove(false);
   };
 
-  const onMouseUp = (e) => {
+  const onMouseUp = () => {
+    debugger
     setMouseDown(false);
-
-    if (difference > 100 && mouseMove === false) {
+    if (currentPage === 1 && difference > 0 && mouseMove === false) {
+      return;
+    } else if (difference > 100 && mouseMove === false) {
       const pageNumber = currentPage + 1;
       swipeLeft(pageNumber, refCards);
       dispatch(setCurrentPage(pageNumber));
@@ -55,10 +57,11 @@ const useMouseSwipe = (refCards) => {
         currentPage * refCards.clientWidth
       }px)`;
     }
-
+  
     if ((currentPage + 2) % 10 === 0) {
       dispatch(getVideosThunk(search));
     }
+    console.log(difference)
   };
 
   return {

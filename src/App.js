@@ -1,9 +1,9 @@
 import Search from "./components/Search/Search";
-import "../src/assets/style.css";
+import style from "./assets/style.module.css";
 import { CardsContainer } from "./components/CardsContainer/CardsContainer";
 const App = () => {
   return (
-    <div className="main">
+    <div className={style.main}>
       <Search />
       <CardsContainer />
     </div>
