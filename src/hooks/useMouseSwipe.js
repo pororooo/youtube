@@ -1,11 +1,10 @@
-import { setCurrentPage, getVideosThunk } from "../store/actions/videosAction";
+import { setCurrentPage } from "../store/actions/videosAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { swipeLeft, swipeRight } from "../utils";
 
 const useMouseSwipe = (refCards) => {
   const currentPage = useSelector((state) => state.currentPage);
-  const search = useSelector((state) => state.search);
   const [start, setTouchStart] = useState(null);
   const [difference, setDifference] = useState(0);
   const [mouseDown, setMouseDown] = useState(false);
@@ -20,7 +19,9 @@ const useMouseSwipe = (refCards) => {
 
   const onMouseMove = (e) => {
     if (start === null || (e.clientX - start > 0 && currentPage === 1)) return;
-    setDifference(start - e.clientX);
+    if (mouseDown === true) {
+      setDifference(start - e.clientX);
+    }
     setMouseMove(true);
 
     if (mouseDown === true && difference > 0) {
@@ -40,15 +41,14 @@ const useMouseSwipe = (refCards) => {
   };
 
   const onMouseUp = () => {
-    debugger
     setMouseDown(false);
-    if (currentPage === 1 && difference > 0 && mouseMove === false) {
+    if (currentPage === 1 && difference <= 0 && !mouseMove) {
       return;
-    } else if (difference > 100 && mouseMove === false) {
+    } else if (difference > 100 && !mouseMove) {
       const pageNumber = currentPage + 1;
       swipeLeft(pageNumber, refCards);
       dispatch(setCurrentPage(pageNumber));
-    } else if (difference < -100 && mouseMove === false) {
+    } else if (difference < -100 && !mouseMove && currentPage !== 1) {
       const pageNumber = currentPage - 1;
       swipeRight(pageNumber, refCards);
       dispatch(setCurrentPage(pageNumber));
@@ -57,11 +57,6 @@ const useMouseSwipe = (refCards) => {
         currentPage * refCards.clientWidth
       }px)`;
     }
-  
-    if ((currentPage + 2) % 10 === 0) {
-      dispatch(getVideosThunk(search));
-    }
-    console.log(difference)
   };
 
   return {

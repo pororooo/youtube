@@ -1,11 +1,10 @@
-import { setCurrentPage, getVideosThunk } from "../store/actions/videosAction";
+import { setCurrentPage } from "../store/actions/videosAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { swipeLeft, swipeRight } from "../utils";
 
 const useTouchSwipe = (refCards) => {
   const currentPage = useSelector((state) => state.currentPage);
-  const search = useSelector((state) => state.search);
   const [start, setTouchStart] = useState(null);
   const [currentTouch, setCurrentTouch] = useState(null);
   const [difference, setDifference] = useState(0);
@@ -27,18 +26,21 @@ const useTouchSwipe = (refCards) => {
     setDifference(start - currentTouch);
 
     if (difference > 0) {
-      refCards.style.transform = `translate(-${(currentPage * refCards.clientWidth - currentTouch)}px)`;
+      refCards.style.transform = `translate(-${
+        currentPage * refCards.clientWidth - currentTouch
+      }px)`;
     }
     if (difference < 0 && currentPage !== 1) {
-      refCards.style.transform = `translate(-${(currentPage * refCards.clientWidth -
+      refCards.style.transform = `translate(-${
+        currentPage * refCards.clientWidth -
         refCards.clientWidth / 2 -
-        currentTouch)}px)`;
+        currentTouch
+      }px)`;
     }
     if (currentPage === 1 && difference < 0) {
       refCards.style.transform = `translate(0px)`;
     }
   };
-
 
   const onTouchEnd = () => {
     if (difference > 0) {
@@ -50,9 +52,6 @@ const useTouchSwipe = (refCards) => {
       const pageNumber = currentPage - 1;
       swipeRight(pageNumber, refCards);
       dispatch(setCurrentPage(pageNumber));
-    }
-    if ((currentPage + 2) % 10 === 0) {
-      dispatch(getVideosThunk(search));
     }
   };
 
