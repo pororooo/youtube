@@ -5,6 +5,7 @@ import Card from "../Card/Card";
 import stl from "./cardsContainer.module.css";
 import useTouchSwipe from "../../hooks/useTouchSwipe";
 import useMouseSwipe from "../../hooks/useMouseSwipe";
+import useVideos from "../../hooks/useVideos";
 
 export let refCards = null;
 
@@ -13,7 +14,8 @@ export const CardsContainer = () => {
   const cards = useRef(null);
   refCards = cards.current;
   const swipeTouch = useTouchSwipe(refCards);
-  const swipeMouse = useMouseSwipe(refCards)
+  const swipeMouse = useMouseSwipe(refCards);
+  useVideos(refCards)
 
   return (
     <div className={stl.main}>
