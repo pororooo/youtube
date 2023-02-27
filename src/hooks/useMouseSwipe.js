@@ -19,17 +19,17 @@ const useMouseSwipe = (refCards) => {
 
   const onMouseMove = (e) => {
     if (start === null || (e.clientX - start > 0 && currentPage === 1)) return;
-    if (mouseDown === true) {
+    if (mouseDown) {
       setDifference(start - e.clientX);
     }
     setMouseMove(true);
 
-    if (mouseDown === true && difference > 0) {
+    if (mouseDown && difference > 0) {
       refCards.style.transform = `translate(-${
         currentPage * refCards.clientWidth - e.clientX
       }px)`;
     }
-    if (mouseDown === true && difference < 0) {
+    if (mouseDown && difference < 0) {
       refCards.style.transform = `translate(-${
         currentPage * refCards.clientWidth -
         refCards.clientWidth / 2 -
